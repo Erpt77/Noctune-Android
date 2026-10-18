@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="assets/yuma_logo.png" width="240" height="240" alt="YumaPlayer Icon" style="border-radius: 28px; box-shadow: 0 8px 24px rgba(0,0,0,0.3);" />
+<img src="assets/noctune-logo.svg" width="240" height="240" alt="Noctune icon" style="border-radius: 28px; box-shadow: 0 8px 24px rgba(0,0,0,0.3);" />
 
-  <h1>YumaPlayer (Yuma)</h1>
+  <h1>Noctune for Android</h1>
 
    <p align="center">
     <a href="README.md">
@@ -28,9 +28,9 @@
   </p>
 
  <div>
-      <img src="https://img.shields.io/github/v/release/MuwMx/YumaPlayer?style=for-the-badge&color=6366f1&labelColor=1e1e2e&logo=github" alt="Latest Release" />
-      <img src="https://img.shields.io/github/stars/MuwMx/YumaPlayer?style=for-the-badge&color=6366f1&labelColor=1e1e2e&logo=github" alt="GitHub Stars" />
-      <img src="https://img.shields.io/github/downloads/MuwMx/YumaPlayer/total?style=for-the-badge&color=6366f1&labelColor=1e1e2e&logo=github" alt="Downloads" />
+      <img src="https://img.shields.io/github/v/release/Erpt77/Noctune-Android?style=for-the-badge&color=6366f1&labelColor=1e1e2e&logo=github" alt="Latest Release" />
+      <img src="https://img.shields.io/github/stars/Erpt77/Noctune-Android?style=for-the-badge&color=6366f1&labelColor=1e1e2e&logo=github" alt="GitHub Stars" />
+      <img src="https://img.shields.io/github/downloads/Erpt77/Noctune-Android/total?style=for-the-badge&color=6366f1&labelColor=1e1e2e&logo=github" alt="Downloads" />
       <img src="https://img.shields.io/badge/License-GPLv3-6366f1?style=for-the-badge&logo=gnu&logoColor=white&labelColor=1e1e2e" alt="License: GPLv3" />
       <img src="https://img.shields.io/badge/Platform-Android%208.0%2B-3DDC84?style=for-the-badge&logo=android&logoColor=white&labelColor=1e1e2e" alt="Android 8.0+" />
       <a href="https://t.me/yumaplayer"><img src="https://img.shields.io/badge/Telegram-Community-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white&labelColor=1e1e2e" alt="Telegram" /></a>
@@ -159,7 +159,7 @@ No subscriptions. No advertisements. Zero telemetry, crash reporters, or third-p
     <tbody>
       <tr>
         <td align="center">
-          <a href="https://github.com/MuwMx/YumaPlayer/releases/latest">
+          <a href="https://github.com/Erpt77/Noctune-Android/releases/latest">
             <img src="https://img.shields.io/badge/GitHub_Releases-Download_APK-7C4DFF?style=for-the-badge&logo=github" height="40" alt="GitHub Releases">
           </a>
         </td>
@@ -185,8 +185,8 @@ No subscriptions. No advertisements. Zero telemetry, crash reporters, or third-p
 
 ### Building from Source
 ```bash
-git clone https://github.com/MuwMx/YumaPlayer.git
-cd YumaPlayer
+git clone https://github.com/Erpt77/Noctune-Android.git
+cd Noctune-Android
 ./gradlew assembleRelease
 # Built APK will be located at: app/build/outputs/apk/release/
 ```
@@ -296,11 +296,11 @@ YumaPlayer is built on the shoulders of the open-source community:
 ## ⚖️ License & Legal Disclaimer
 
 ### License
-YumaPlayer is free software licensed under the **GNU General Public License v3.0 (GPLv3)**.  
+Noctune for Android is a modified work licensed under the **GNU General Public License v3.0 (GPLv3)**.  
 You may freely copy, modify, and redistribute the source code provided you preserve copyright notices and distribute derivative works under the same GPL-3.0 license.
 
 ### Disclaimer
-YumaPlayer is an independent third-party client. It is **not affiliated with, endorsed by, or sponsored by Google LLC, YouTube Music, or Spotify AB**. The application is provided for personal use only as a tool for managing your own library.
+Noctune for Android is an independent third-party client. It is **not affiliated with, endorsed by, or sponsored by Google LLC, YouTube Music, or Spotify AB**. The application is provided for personal use only as a tool for managing your own library.
 
 ---
 
