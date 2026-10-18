@@ -97,7 +97,7 @@ fun AppearanceSettings(navController: NavController) {
             DarkModeKey,
             defaultValue = DarkMode.AUTO,
         )
-    val (pureBlack, onPureBlackChange) = rememberPreference(PureBlackKey, defaultValue = false)
+    val (pureBlack, onPureBlackChange) = rememberPreference(PureBlackKey, defaultValue = true)
     val (blurNavBar, onBlurNavBarChange) = rememberPreference(BlurNavBarKey, defaultValue = true)
     val (blurRadius, onBlurRadiusChange) =
         rememberPreference(
