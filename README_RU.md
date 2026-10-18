@@ -2,7 +2,7 @@
 
   <img src="assets/noctune-logo.svg" width="240" height="240" alt="Noctune Icon" style="border-radius: 28px; box-shadow: 0 8px 24px rgba(0,0,0,0.3);" />
 
-  <h1>YumaPlayer (Yuma)</h1>
+  <h1>Noctune для Android</h1>
 
   <p align="center">
     <a href="README.md">
@@ -30,9 +30,9 @@
   </p>
 
   <div>
-    <img src="https://img.shields.io/github/v/release/MuwMx/YumaPlayer?style=for-the-badge&color=6366f1&labelColor=1e1e2e&logo=github" alt="Latest Release" />
-    <img src="https://img.shields.io/github/stars/MuwMx/YumaPlayer?style=for-the-badge&color=6366f1&labelColor=1e1e2e&logo=github" alt="GitHub Stars" />
-    <img src="https://img.shields.io/github/downloads/MuwMx/YumaPlayer/total?style=for-the-badge&color=6366f1&labelColor=1e1e2e&logo=github" alt="Downloads" />
+    <img src="https://img.shields.io/github/v/release/Erpt77/Noctune-Android?style=for-the-badge&color=6366f1&labelColor=1e1e2e&logo=github" alt="Latest Release" />
+    <img src="https://img.shields.io/github/stars/Erpt77/Noctune-Android?style=for-the-badge&color=6366f1&labelColor=1e1e2e&logo=github" alt="GitHub Stars" />
+    <img src="https://img.shields.io/github/downloads/Erpt77/Noctune-Android/total?style=for-the-badge&color=6366f1&labelColor=1e1e2e&logo=github" alt="Downloads" />
     <img src="https://img.shields.io/badge/License-GPLv3-6366f1?style=for-the-badge&logo=gnu&logoColor=white&labelColor=1e1e2e" alt="License: GPLv3" />
     <img src="https://img.shields.io/badge/Platform-Android%208.0%2B-3DDC84?style=for-the-badge&logo=android&logoColor=white&labelColor=1e1e2e" alt="Android 8.0+" />
     <a href="https://t.me/yumaplayer"><img src="https://img.shields.io/badge/Telegram-Community-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white&labelColor=1e1e2e" alt="Telegram" /></a>
@@ -201,7 +201,7 @@ YumaPlayer — многомодульный Android-проект, построе
     <tbody>
       <tr>
         <td align="center">
-          <a href="https://github.com/MuwMx/YumaPlayer/releases/latest">
+          <a href="https://github.com/Erpt77/Noctune-Android/releases/latest">
             <img src="assets/badge_github.png" height="50" alt="Download on GitHub" />
           </a>
         </td>
@@ -222,8 +222,8 @@ YumaPlayer — многомодульный Android-проект, построе
 
 ### Сборка из исходников
 ```bash
-git clone https://github.com/MuwMx/YumaPlayer.git
-cd YumaPlayer
+git clone https://github.com/Erpt77/Noctune-Android.git
+cd Noctune-Android
 ./gradlew assembleRelease
 # Готовый APK появится в: app/build/outputs/apk/release/
 ```
