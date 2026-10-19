@@ -6,7 +6,7 @@ import moe.rukamori.archivetune.lyrics.LyricsRomanizationPreferences
 
 data class UserSettings(
     val isDarkTheme: Boolean = true,
-    val themeColorHex: String = "ED5564",
+    val themeColorHex: String = "7C5CFF",
     val fontPreference: AppFontPreference = AppFontPreference.DEFAULT,
 )
 
