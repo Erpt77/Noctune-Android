@@ -37,7 +37,7 @@ import moe.rukamori.archivetune.ui.utils.backToMain
 import moe.rukamori.archivetune.utils.rememberPreference
 import androidx.navigation.compose.rememberNavController
 
-// Оставляем только базовые сочные акценты для фолбэка приложения
+// Accent colors used when artwork-based colors are unavailable.
 val TargetAccentColors = listOf(
     Color(0xFF7C5CFF), // Noctune violet
     Color(0xFF4A90D9), // Blue
@@ -82,7 +82,7 @@ fun PalettePickerScreen(navController: NavController) {
                 .padding(horizontal = 24.dp)
         ) {
             Text(
-                text = "Выберите базовый цвет приложения (используется, когда нет обложки трека):",
+                text = "Choose the app accent color used when artwork-based colors are unavailable.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(vertical = 16.dp)
@@ -96,7 +96,7 @@ fun PalettePickerScreen(navController: NavController) {
             ) {
                 items(TargetAccentColors) { color ->
                     val hexString = String.format("#%06X", 0xFFFFFF and color.toArgb())
-                    val isSelected = customThemeColor == hexString || (customThemeColor == "default" && hexString == "#ED5564")
+                    val isSelected = customThemeColor == hexString || (customThemeColor == "default" && hexString == "#7C5CFF")
 
                     Box(
                         modifier = Modifier
