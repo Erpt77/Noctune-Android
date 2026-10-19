@@ -37,6 +37,7 @@ data class HomeUiState(
     val quickPicks: ImmutableList<Song>,
     val speedDialItems: ImmutableList<LocalItem>,
     val forgottenFavorites: ImmutableList<Song>,
+    val onRepeat: ImmutableList<Song>,
     val keepListening: ImmutableList<LocalItem>,
     val similarRecommendations: ImmutableList<SimilarRecommendation>,
     val accountPlaylists: ImmutableList<PlaylistItem>,
