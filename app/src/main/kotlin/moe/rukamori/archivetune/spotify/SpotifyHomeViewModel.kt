@@ -190,10 +190,7 @@ class SpotifyHomeViewModel @Inject constructor(
                                 }
                             }
                         } else if (!isRecent) {
-                            val converted = convertHomeSection(raw)
-                            if (converted != null) {
-                                sections.add(converted)
-                            }
+                            sections.addAll(convertHomeSections(raw))
                         }
                     }
                 }
