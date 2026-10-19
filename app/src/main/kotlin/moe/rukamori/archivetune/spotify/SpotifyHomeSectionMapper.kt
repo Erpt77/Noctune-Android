@@ -15,29 +15,31 @@ import moe.rukamori.archivetune.spotify.models.SpotifyPlaylist
 import moe.rukamori.archivetune.spotify.models.SpotifyPlaylistOwner
 import moe.rukamori.archivetune.spotify.models.SpotifyPlaylistTracksRef
 
-internal fun convertHomeSection(feedSection: SpotifyHomeFeedSection): SpotifyHomeSection? {
-    val title = feedSection.title ?: return null
+/**
+ * Convert every content type returned in a Spotify home shelf.
+ *
+ * Some Spotify feed responses mix playlists, albums, and artists in a single
+ * section. Keeping only the dominant type silently discards the other items,
+ * so split mixed shelves into smaller typed shelves instead.
+ */
+internal fun convertHomeSections(feedSection: SpotifyHomeFeedSection): List<SpotifyHomeSection> {
+    val title = feedSection.title ?: return emptyList()
 
     val playlists = feedSection.items.filterIsInstance<SpotifyHomeFeedItem.Playlist>()
     val albums = feedSection.items.filterIsInstance<SpotifyHomeFeedItem.Album>()
     val artists = feedSection.items.filterIsInstance<SpotifyHomeFeedItem.Artist>()
+    val populatedTypes = listOf(playlists.isNotEmpty(), albums.isNotEmpty(), artists.isNotEmpty()).count { it }
 
-    val counts =
-        arrayOf(
-            SectionType.PLAYLISTS to playlists.size,
-            SectionType.ALBUMS to albums.size,
-            SectionType.ARTISTS to artists.size,
-        )
-    val (dominant, size) = counts.maxByOrNull { it.second } ?: return null
-    if (size == 0) return null
+    fun sectionTitle(suffix: String) =
+        if (populatedTypes > 1) "$title · $suffix" else title
 
-    return when (dominant) {
-        SectionType.PLAYLISTS ->
-            SpotifyHomeSection(
-                title = title,
-                type = SectionType.PLAYLISTS,
-                playlists =
-                    playlists.map {
+    return buildList {
+        if (playlists.isNotEmpty()) {
+            add(
+                SpotifyHomeSection(
+                    title = sectionTitle("Playlists"),
+                    type = SectionType.PLAYLISTS,
+                    playlists = playlists.map {
                         SpotifyPlaylist(
                             id = it.id,
                             name = it.name,
@@ -48,13 +50,15 @@ internal fun convertHomeSection(feedSection: SpotifyHomeFeedSection): SpotifyHom
                             uri = it.uri,
                         )
                     },
+                ),
             )
-        SectionType.ALBUMS ->
-            SpotifyHomeSection(
-                title = title,
-                type = SectionType.ALBUMS,
-                albums =
-                    albums.map {
+        }
+        if (albums.isNotEmpty()) {
+            add(
+                SpotifyHomeSection(
+                    title = sectionTitle("Albums"),
+                    type = SectionType.ALBUMS,
+                    albums = albums.map {
                         SpotifyAlbum(
                             id = it.id,
                             name = it.name,
@@ -64,13 +68,15 @@ internal fun convertHomeSection(feedSection: SpotifyHomeFeedSection): SpotifyHom
                             uri = it.uri,
                         )
                     },
+                ),
             )
-        SectionType.ARTISTS ->
-            SpotifyHomeSection(
-                title = title,
-                type = SectionType.ARTISTS,
-                artists =
-                    artists.map {
+        }
+        if (artists.isNotEmpty()) {
+            add(
+                SpotifyHomeSection(
+                    title = sectionTitle("Artists"),
+                    type = SectionType.ARTISTS,
+                    artists = artists.map {
                         SpotifyArtist(
                             id = it.id,
                             name = it.name,
@@ -78,7 +84,8 @@ internal fun convertHomeSection(feedSection: SpotifyHomeFeedSection): SpotifyHom
                             uri = it.uri,
                         )
                     },
+                ),
             )
-        else -> null
+        }
     }
 }
