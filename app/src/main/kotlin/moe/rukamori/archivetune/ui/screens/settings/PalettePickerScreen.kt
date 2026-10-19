@@ -6,7 +6,6 @@
 
 package moe.rukamori.archivetune.ui.screens.settings
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -23,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -37,16 +37,17 @@ import moe.rukamori.archivetune.ui.utils.backToMain
 import moe.rukamori.archivetune.utils.rememberPreference
 import androidx.navigation.compose.rememberNavController
 
-// Оставляем только базовые сочные акценты для фолбэка приложения
+// Accent colors used when artwork-based colors are unavailable.
 val TargetAccentColors = listOf(
-    Color(0xFFED5564), // Дефолтный красный Yuma
-    Color(0xFF4A90D9), // Синий
-    Color(0xFF1DB954), // Зелёный
-    Color(0xFF9B59B6), // Пурпурный
-    Color(0xFFE67E22), // Оранжевый
-    Color(0xFF1ABC9C), // Бирюзовый
-    Color(0xFF708090), // Слейт
-    Color(0xFFFF69B4)  // Розовый
+    Color(0xFF7C5CFF), // Noctune violet
+    Color(0xFF4A90D9), // Blue
+    Color(0xFF1DB954), // Green
+    Color(0xFF9B59B6), // Purple
+    Color(0xFFED5564), // Coral
+    Color(0xFFE67E22), // Orange
+    Color(0xFF1ABC9C), // Teal
+    Color(0xFF708090), // Slate
+    Color(0xFFFF69B4)  // Pink
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,7 +55,7 @@ val TargetAccentColors = listOf(
 fun PalettePickerScreen(navController: NavController) {
     val (customThemeColor, onCustomThemeColorChange) = rememberPreference(
         CustomThemeColorKey,
-        defaultValue = "#ED5564"
+        defaultValue = "#7C5CFF"
     )
 
     Scaffold(
@@ -81,7 +82,7 @@ fun PalettePickerScreen(navController: NavController) {
                 .padding(horizontal = 24.dp)
         ) {
             Text(
-                text = "Выберите базовый цвет приложения (используется, когда нет обложки трека):",
+                text = "Choose the app accent color used when artwork-based colors are unavailable.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(vertical = 16.dp)
@@ -95,7 +96,7 @@ fun PalettePickerScreen(navController: NavController) {
             ) {
                 items(TargetAccentColors) { color ->
                     val hexString = String.format("#%06X", 0xFFFFFF and color.toArgb())
-                    val isSelected = customThemeColor == hexString || (customThemeColor == "default" && hexString == "#ED5564")
+                    val isSelected = customThemeColor == hexString || (customThemeColor == "default" && hexString == "#7C5CFF")
 
                     Box(
                         modifier = Modifier
@@ -127,17 +128,139 @@ fun PalettePickerScreen(navController: NavController) {
     }
 }
 
-// Заглушка экрана создания темы, чтобы не ломать граф навигации в MainActivity
+/**
+ * Lets users create a personal Noctune accent color. Palette choices remain separate
+ * from layout options, so changing a color never changes the app's layout.
+ */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ThemeCreatorScreen(navController: NavController) {
-    val context = androidx.compose.ui.platform.LocalContext.current
-    LaunchedEffect(Unit) {
-        Toast.makeText(context, "Используется автоматический Monet-движок Юмы", Toast.LENGTH_SHORT).show()
-        navController.navigateUp()
+    val (savedColor, onSavedColorChange) = rememberPreference(
+        CustomThemeColorKey,
+        defaultValue = "#7C5CFF"
+    )
+    var hexInput by remember(savedColor) {
+        mutableStateOf(savedColor.removePrefix("#").uppercase().takeIf { it.matches(Regex("[0-9A-F]{6}")) } ?: "7C5CFF")
     }
-    Box(modifier = Modifier.fillMaxSize())
-}
+    val normalizedHex = "#$hexInput"
+    val isValid = hexInput.matches(Regex("[0-9A-Fa-f]{6}"))
+    val previewColor = remember(normalizedHex, isValid) {
+        if (isValid) Color(android.graphics.Color.parseColor(normalizedHex)) else Color(0xFF7C5CFF)
+    }
 
+    Scaffold(
+        containerColor = Color.Transparent,
+        topBar = {
+            TopAppBar(
+                title = { Text("Create a theme") },
+                navigationIcon = {
+                    IconButton(
+                        onClick = navController::navigateUp,
+                        onLongClick = navController::backToMain,
+                    ) {
+                        Icon(painterResource(R.drawable.arrow_back), contentDescription = "Back")
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
+            )
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(horizontal = 24.dp, vertical = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text(
+                text = "Create a Noctune accent palette",
+                style = MaterialTheme.typography.headlineSmall,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Text(
+                text = "Choose a color that fits your setup. This changes the app's color palette, not its layout.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(112.dp)
+                    .clip(RoundedCornerShape(24.dp))
+                    .background(previewColor),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "Noctune",
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = if (previewColor.luminance() > 0.5f) Color.Black else Color.White
+                )
+            }
+            OutlinedTextField(
+                value = hexInput,
+                onValueChange = { input ->
+                    hexInput = input.filter { it.isDigit() || it.lowercaseChar() in 'a'..'f' }
+                        .uppercase()
+                        .take(6)
+                },
+                label = { Text("Hex color (without #)") },
+                prefix = { Text("#") },
+                supportingText = {
+                    Text(if (isValid) "Preview updates as you type." else "Enter exactly 6 hexadecimal characters.")
+                },
+                isError = !isValid,
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Text(
+                text = "Quick colors",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                TargetAccentColors.take(5).forEach { color ->
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .aspectRatio(1f)
+                            .clip(CircleShape)
+                            .background(color)
+                            .border(
+                                width = if (color == previewColor) 3.dp else 1.dp,
+                                color = if (color == previewColor) MaterialTheme.colorScheme.onSurface else Color.Transparent,
+                                shape = CircleShape
+                            )
+                            .clickable {
+                                hexInput = String.format("%06X", 0xFFFFFF and color.toArgb())
+                            }
+                    )
+                }
+            }
+            Button(
+                onClick = {
+                    onSavedColorChange(normalizedHex)
+                    navController.navigateUp()
+                },
+                enabled = isValid,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Save theme")
+            }
+            OutlinedButton(
+                onClick = {
+                    hexInput = "7C5CFF"
+                    onSavedColorChange("#7C5CFF")
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Reset to Noctune violet")
+            }
+        }
+    }
+}
 @ThemePreviews
 @Composable
 private fun PalettePickerScreenPreview() {
