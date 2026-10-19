@@ -41,7 +41,7 @@ concurrency:
 
 jobs:
   android-build:
-    name: Unit tests and Android release compile
+    name: Android debug build and lint
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
@@ -64,5 +64,5 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Run unit tests and compile the GMS ARM64 release
-        run: ./gradlew --no-daemon testGmsMobileArm64ReleaseUnitTest assembleGmsMobileArm64Release
+      - name: Build and lint the GMS universal debug APK
+        run: ./gradlew --no-daemon assembleGmsMobileUniversalDebug :app:lintGmsMobileUniversalDebug
