@@ -161,6 +161,34 @@ internal fun HomeContent(
                             }
                         }
 
+                        if (uiState.onRepeat.isNotEmpty()) {
+                            sectionSpacer("on_repeat")
+                            item(
+                                key = "home_on_repeat_header",
+                                contentType = "section_header",
+                            ) {
+                                HomeSectionHeader(
+                                    title = stringResource(R.string.on_repeat),
+                                    modifier = Modifier.animateItem(),
+                                )
+                            }
+                            item(
+                                key = "home_on_repeat",
+                                contentType = "media_shelf",
+                            ) {
+                                KeepListeningSection(
+                                    keepListening = uiState.onRepeat,
+                                    mediaMetadata = mediaMetadata,
+                                    isPlaying = isPlaying,
+                                    navController = navController,
+                                    playerConnection = playerConnection,
+                                    menuState = menuState,
+                                    scope = scope,
+                                    modifier = Modifier.animateItem(),
+                                )
+                            }
+                        }
+
                         if (uiState.keepListening.isNotEmpty()) {
                             sectionSpacer("keep_listening")
                             item(
