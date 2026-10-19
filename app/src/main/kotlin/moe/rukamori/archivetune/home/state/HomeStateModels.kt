@@ -50,6 +50,7 @@ data class HomeLocalContent(
     val quickPicks: List<Song>,
     val speedDialItems: List<LocalItem>,
     val forgottenFavorites: List<Song>,
+    val onRepeat: List<Song>,
     val keepListening: List<LocalItem>,
 )
 
@@ -72,6 +73,7 @@ data class HomeContent(
             local.quickPicks.isNotEmpty() ||
                 local.speedDialItems.isNotEmpty() ||
                 local.forgottenFavorites.isNotEmpty() ||
+                local.onRepeat.isNotEmpty() ||
                 local.keepListening.isNotEmpty() ||
                 remote.similarRecommendations.isNotEmpty() ||
                 remote.accountPlaylists.isNotEmpty() ||
@@ -105,6 +107,7 @@ data class HomeStateInputs(
                 quickPicks = ImmutableList.copyOf(content.local.quickPicks),
                 speedDialItems = ImmutableList.copyOf(content.local.speedDialItems),
                 forgottenFavorites = ImmutableList.copyOf(content.local.forgottenFavorites),
+                onRepeat = ImmutableList.copyOf(content.local.onRepeat),
                 keepListening = ImmutableList.copyOf(content.local.keepListening),
                 similarRecommendations = ImmutableList.copyOf(content.remote.similarRecommendations),
                 accountPlaylists = ImmutableList.copyOf(content.remote.accountPlaylists),
