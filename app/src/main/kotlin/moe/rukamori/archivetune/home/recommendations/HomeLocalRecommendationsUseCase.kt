@@ -74,6 +74,16 @@ class HomeLocalRecommendationsUseCase
                     .take(20)
             }
 
+        suspend fun loadOnRepeat(): List<Song> =
+            withContext(Dispatchers.IO) {
+                val fromTimeStamp = System.currentTimeMillis() - 86400000L * 14
+                database
+                    .mostPlayedSongs(fromTimeStamp, limit = 5, offset = 0)
+                    .first()
+                    .filter { song -> song.artists.none { it.blockedAt != null } }
+                    .distinctBy { it.id }
+            }
+
         suspend fun loadKeepListening(): List<LocalItem> =
             withContext(Dispatchers.IO) {
                 val fromTimeStamp = System.currentTimeMillis() - 86400000 * 7 * 2
