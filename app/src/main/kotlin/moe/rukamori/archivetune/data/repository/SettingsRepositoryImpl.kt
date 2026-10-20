@@ -62,7 +62,7 @@ class SettingsRepositoryImpl @Inject constructor(
     }
 
     private fun loadSettings(): UserSettings {
-        val colorHex = prefs.getString("theme_color_hex", "ED5564") ?: "ED5564"
+        val colorHex = prefs.getString("theme_color_hex", "7C5CFF") ?: "7C5CFF"
         val fontPrefStr = prefs.getString("font_preference", AppFontPreference.DEFAULT.name)
         val fontPref = try {
             AppFontPreference.valueOf(fontPrefStr ?: AppFontPreference.DEFAULT.name)
