@@ -125,6 +125,7 @@ class HomeViewModel
         private val quickPicks = quickPicksManager.observe(viewModelScope)
         private val speedDialItems = MutableStateFlow<List<LocalItem>>(emptyList())
         private val forgottenFavorites = MutableStateFlow<List<Song>?>(null)
+        private val onRepeat = MutableStateFlow<List<Song>?>(null)
         private val keepListening = MutableStateFlow<List<LocalItem>?>(null)
         private val similarRecommendations = MutableStateFlow<List<SimilarRecommendation>?>(null)
         private val homePage = MutableStateFlow<HomePage?>(null)
@@ -156,12 +157,14 @@ class HomeViewModel
                 quickPicks,
                 speedDialItems,
                 forgottenFavorites,
+                onRepeat,
                 keepListening,
-            ) { quickPicks, speedDialItems, forgottenFavorites, keepListening ->
+            ) { quickPicks, speedDialItems, forgottenFavorites, onRepeat, keepListening ->
                 HomeLocalContent(
                     quickPicks = quickPicks.orEmpty(),
                     speedDialItems = speedDialItems,
                     forgottenFavorites = forgottenFavorites.orEmpty(),
+                    onRepeat = onRepeat.orEmpty(),
                     keepListening = keepListening.orEmpty(),
                 )
             }
@@ -289,6 +292,9 @@ class HomeViewModel
                     }
                     launch {
                         forgottenFavorites.value = localRecommendations.loadForgottenFavorites()
+                    }
+                    launch {
+                        onRepeat.value = localRecommendations.loadOnRepeat()
                     }
                     launch {
                         keepListening.value = localRecommendations.loadKeepListening()
