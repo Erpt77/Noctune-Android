@@ -752,6 +752,7 @@
     <string name="lastfm_api_credentials">API credentials</string>
     <string name="lastfm_api_credentials_default">Using default credentials</string>
     <string name="lastfm_api_credentials_custom">Using custom credentials</string>
+    <string name="lastfm_api_credentials_override_explanation">Most users should leave these fields empty. Noctune uses the credentials configured by the app; only enter overrides if you are setting up your own Last.fm API application or a service that requires different credentials.</string>
     <string name="lastfm_api_credentials_hint">Leave credentials blank for compatible services that accept arbitrary API keys and shared secrets.</string>
     <string name="lastfm_api_key_override">API key</string>
     <string name="lastfm_secret_override">Shared secret</string>

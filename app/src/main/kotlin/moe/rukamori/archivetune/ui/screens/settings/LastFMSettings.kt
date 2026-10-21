@@ -535,6 +535,11 @@ private fun LastFmServiceEditorDialog(
                 }
 
                 if (editor.showApiCredentials) {
+                    Text(
+                        text = stringResource(R.string.lastfm_api_credentials_override_explanation),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
                     OutlinedTextField(
                         value = editor.apiKeyOverride,
                         onValueChange = onApiKeyOverrideChange,
